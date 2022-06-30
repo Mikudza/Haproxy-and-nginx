@@ -21,9 +21,9 @@ Vagrant.configure("2") do |config|
       apt update
       apt install haproxy=2.6.\* -y
       systemctl enable haproxy
-      rm /etc/haproxy/haproxy.cfg && cp /vagrant/haproxy.cfg /etc/haproxy/haproxy.cfg
+      rm /etc/haproxy/haproxy.cfg && ln -s /vagrant/haproxy.cfg /etc/haproxy/haproxy.cfg
       systemctl reload haproxy
-      ifconfig | grep 192.168.105
+      ip a | grep 192.168.105
      SHELL
 
   end
@@ -40,9 +40,12 @@ Vagrant.configure("2") do |config|
       apt update
       apt install nginx -y
       systemctl enable nginx
-      rm /etc/nginx/nginx.conf && cp /vagrant/nginx.conf /etc/nginx/nginx.conf
+      ln -s /vagrant/html/ /var/www/html/
+      rm -rf /etc/nginx/sites-available && rm -rf /etc/nginx/sites-enabled
+      ln -s /vagrant/sites-available /etc/nginx/sites-available
+      ln -s /etc/nginx/sites-available /etc/nginx/sites-enabled
       systemctl reload nginx
-      ifconfig | grep 192.168.105
+      ip a | grep 192.168.105
      SHELL
   end
 #=================

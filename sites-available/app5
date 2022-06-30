@@ -1,0 +1,16 @@
+server {
+	listen 9295 default_server;
+	listen [::]:9295 default_server;
+
+	root /var/www/html;
+
+	index index.html index.htm index.app5.html;
+
+	server_name _;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+}
